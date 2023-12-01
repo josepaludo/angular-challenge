@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,11 +7,13 @@ import { Component } from '@angular/core';
     <nav class=" bg-stone-800 py-3 text-stone-100">
         <div class="flex justify-between max-w-screen-lg px-10 mx-auto">
             <a routerLink="/">Home</a>
-            <div class=" flex">
+            <div class=" flex" *ngIf="!auth.authenticated; else authenticated">
                 <a routerLink="/login" class=" me-3">Login</a>
                 <a routerLink="/register">Register</a>
-
             </div>
+            <ng-template #authenticated>
+                <a routerLink="/profile">Profile</a>
+            </ng-template>
         </div>
     </nav>
     <main class=" max-w-screen-lg mx-auto p-10">
@@ -19,5 +22,8 @@ import { Component } from '@angular/core';
   `
 })
 export class AppComponent {
-  title = 'frontend';
+
+    title = 'frontend'
+
+    constructor(public auth: AuthService) {}
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { LoginType, RegisterType } from 'src/types';
+import { CookieService } from 'ngx-cookie-service';
 import { axiosClient } from 'src/constants';
-import { LoginType, RegisterType, UserType } from 'src/types';
 
 
 @Injectable({
@@ -8,16 +9,22 @@ import { LoginType, RegisterType, UserType } from 'src/types';
 })
 export class AuthService {
 
-    user: UserType|null
+    authenticated: boolean = false
+    username: string|null = null
 
-    constructor() {
-        this.user = null
+    constructor(private cookieService: CookieService) {
+        this.maintenance()
     }
 
     async login(data: LoginType) {
         return await axiosClient.post('auth/login', data)
             .then((res) => {
                 const {data, status} = res
+                const username = data.username
+                if (status === 200 && data.username) {
+                    this.username = username
+                    this.authenticated = true
+                }
                 return {data, status}
             })
             .catch((err) => {
@@ -35,6 +42,22 @@ export class AuthService {
             .catch((err) => {
                 const {data, status} = err.response
                 return {data, status}
+            })
+    }
+
+    maintenance() {
+        axiosClient.get('api/user-data')
+            .then((res) => {
+                const {data, status} = res
+                console.log(data, status)
+                if (status !== 200 || data.username.trim() === "") {
+                    return
+                }
+                this.authenticated = true
+                this.username = data.username
+            })
+            .catch((err) => {
+                console.log(err)
             })
     }
 

@@ -19,7 +19,7 @@ authRouter.use(cookieParser())
 authRouter.post('/login', async (req, res) => {
 
 
-    const data = {message: ""}
+    const data = {message: "", username: ""}
     const {email, password} = req.body
     if (!email || !password) {
         data.message = "Wrong input fields."
@@ -54,6 +54,7 @@ authRouter.post('/login', async (req, res) => {
         }
         if (result) {
             data.message = "Success."
+            data.username = user!.username
             const token = jwt.sign({ id: user!.id }, SECRET_KEY ?? "");
             res.cookie(accessToken, token, {
                 httpOnly: true,
