@@ -18,7 +18,6 @@ authRouter.use(cookieParser())
 
 authRouter.post('/login', async (req, res) => {
 
-
     const data = {message: "", username: ""}
     const {email, password} = req.body
     if (!email || !password) {
@@ -120,7 +119,18 @@ authRouter.post('/register', async (req, res) => {
 })
 
 authRouter.post('/sync-db', async (req, res) => {
-    await sequelize.sync({force: true})
+    const data = {message: ""}
+    try {
+        await sequelize.sync({force: true})
+        data.message = "Success to sync DB"
+        res.status(200)
+    } catch {
+        data.message = "Fail to sync DB"
+        res.status(500)
+    } finally {
+        res.json(data)
+        return
+    }
 })
 
 export { authRouter }
