@@ -118,6 +118,21 @@ authRouter.post('/register', async (req, res) => {
     })
 })
 
+authRouter.post('/logout', (req, res) => {
+    const data = { message: "" }
+    try {
+        res.clearCookie(accessToken)
+        data.message = "Success"
+        res.status(200)
+    } catch {
+        data.message = "Error while trying to logout"
+        res.status(500)
+    } finally {
+        res.json(data)
+        return
+    }
+})
+
 authRouter.post('/sync-db', async (req, res) => {
     const data = {message: ""}
     try {

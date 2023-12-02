@@ -9,9 +9,9 @@ import { CommonModule } from '@angular/common';
         <div
             class=" rounded px-5 py-3 font-semibold text-lg border-2 "
             [ngClass]="{
-                'bg-red-500 border-red-700 text-red-200': color === 'red', 
-                'bg-amber-500 border-amber-700 text-amber-200': color === 'amber', 
-                'bg-green-500 border-green-700 text-green-200': color === 'green', 
+                'bg-red-500 border-red-600 text-red-100': color === 'red', 
+                'bg-amber-500 border-amber-600 text-amber-100': color === 'amber', 
+                'bg-green-500 border-green-600 text-green-100': color === 'green', 
             }"
         >
             {{message}}

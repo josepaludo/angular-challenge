@@ -45,6 +45,23 @@ export class AuthService {
             })
     }
 
+    async logout() {
+        return await axiosClient.post('auth/logout')
+            .then((res) => {
+                const {data, status} = res
+                return {data, status}
+            })
+            .catch((err) => {
+                const {data, status} = err.response
+                return {data, status}
+            })
+    }
+
+    clientSideLogout() {
+        this.authenticated = false
+        this.username = null
+    }
+
     maintenance() {
         axiosClient.get('api/user-data')
             .then((res) => {
