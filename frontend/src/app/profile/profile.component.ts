@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth.service';
-import { WarningComponent } from '../warning/warning.component';
+import { WarningComponent } from '../components/warning/warning.component';
 import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'app-profile',
