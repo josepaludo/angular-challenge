@@ -8,21 +8,44 @@ const DB_URL = process.env.DB_URL
 const sequelize = new Sequelize(DB_URL ?? "postgres://user:password@localhost:5432/db");
 
 const User = sequelize.define('User', {
-  username: DataTypes.STRING,
-  password: DataTypes.STRING,
-  email: DataTypes.STRING,
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+    }
 });
 
 const Employee = sequelize.define('Employee', {
-    name: DataTypes.STRING,
-    position: DataTypes.ENUM('founder', 'admin, staff'),
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    position: {
+        type: DataTypes.ENUM('founder', 'admin', 'staff'),
+        allowNull: false
+    }
 })
 Employee.belongsTo(User)
 User.hasMany(Employee)
 
 const Company = sequelize.define('Company', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
+    name: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
 })
 Employee.belongsTo(Company)
 Company.hasMany(Employee)

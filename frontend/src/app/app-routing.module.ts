@@ -7,6 +7,7 @@ import { HomeComponent as CompanyHomeComponent } from './company/home/home.compo
 import { SyncdbComponent } from './syncdb/syncdb.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CreateCompanyComponent } from './company/create-company/create-company.component';
+import { CompanyRouterOutletComponent } from './company/company-router-outlet/company-router-outlet.component';
 
 
 const routes: Routes = [
@@ -17,7 +18,7 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     {
         path: 'company',
-        component: CompanyHomeComponent,
+        component: CompanyRouterOutletComponent,
         children: [
             { path: "home", component: CompanyHomeComponent },
             { path: "create-company", component: CreateCompanyComponent },

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
         <button
             class="px-4 py-2 rounded-sm text-lg font-semibold"
             (click)="handleClick()"
+            [type]="type"
             [disabled]="disabled"
             [ngClass]="{
                 'text-blue-50 bg-blue-500 hover:bg-blue-400 focus:bg-blue-400': color === 'blue' && !disabled,
@@ -26,6 +27,7 @@ export class ButtonComponent {
 
     @Output() onClick: EventEmitter<any> = new EventEmitter()
     @Input() title = ""
+    @Input() type: "button"|"submit" = "button"
     @Input() class = ""
     @Input() color: "blue"|"red" = "blue"
     @Input() disabled: boolean = false

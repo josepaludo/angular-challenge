@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { authMiddleware } from "../middleware";
-import { TokenType } from "../types";
+import { CompaniesType, TokenType, UserDataType } from "../types";
 import { User } from "../db/models";
+import { companyRouter } from "./company-routes";
+import { getCompanies } from "../db/queries";
 
 
 const protectedRouter = Router()
@@ -34,6 +36,8 @@ protectedRouter.get('/user-data', async (req, res) => {
     res.json(data)
     return
 })
+
+protectedRouter.use('/company', companyRouter)
 
 
 export { protectedRouter }
