@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { axiosClientCompany } from 'src/constants';
-import { CompaniesType, CompanyTypeWithEmployee, CreateCompanyType } from 'src/types';
+import { CompaniesType, CompanyTypeWithEmployee, CreateCompanyType, EmployeeType } from 'src/types';
 
 
 @Injectable({
@@ -10,6 +10,7 @@ export class CompanyService {
 
     companies: CompaniesType|undefined
     company: CompanyTypeWithEmployee|undefined
+    ownEmployee: EmployeeType|undefined
     loading = false
 
     async createCompany(data: CreateCompanyType) {
@@ -54,6 +55,7 @@ export class CompanyService {
     setCompany(name: string) {
         if (!this.loading && this.companies) {
             this.company = this.companies.find(comp => comp.name === name)
+            this.ownEmployee = this.company!.employee
         } else {
             console.log("Set Time Out.")
             setTimeout(() => this.setCompany(name), 200)

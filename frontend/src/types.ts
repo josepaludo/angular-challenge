@@ -22,18 +22,6 @@ export type CreateCompanyType = {
 
 export type PositionType = "founder"|"admin"|"staff"
 
-export type CompanyTypeWithEmployee = {
-    name: string,
-    description: string
-    employee: {
-        name: string,
-        position: PositionType,
-    },
-    employees: EmployeeType[]
-}
-
-export type CompaniesType = CompanyTypeWithEmployee[]
-
 export type CompanyType = {
     name: string,
     description: string
@@ -44,8 +32,23 @@ export type EmployeeType = {
     position: PositionType,
 }
 
+export type CompanyTypeWithEmployee = CompanyType & {
+    employee: EmployeeType,
+    employees: EmployeeType[]
+}
+
+export type CompaniesType = CompanyTypeWithEmployee[]
+
+export type EmployeeServiceType = EmployeeType & { company: CompanyType }
+
 export type WarningPropsType = {
     show: boolean,
     message: string,
     color: "green"|"red"|"amber"
+}
+
+export const Position = {
+    staff: "staff",
+    admin: "admin",
+    founder: "founder"
 }

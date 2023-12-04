@@ -16,7 +16,9 @@ import { CardComponent } from 'src/app/components/card/card.component';
         >
             <app-card *ngFor="let employee of companyService.company.employees">
                 <h1 class="text-2xl font-semibold mb-3">
-                    {{employee.name}}
+                    <a [routerLink]="'../employee/'+employee.name+'/home'">
+                        {{employee.name}}
+                    </a>
                 </h1>
                 <h2>
                     Company:

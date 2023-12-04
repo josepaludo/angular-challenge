@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CompanyService } from '../company.service';
 
+
 @Component({
     selector: 'app-company-page',
     standalone: true,
@@ -20,6 +21,9 @@ import { CompanyService } from '../company.service';
                 *ngIf="companyService.company"
             >
                 {{companyService.company.name}}
+                <span class="ms-5 text-2xl italic font-light">
+                    Company
+                </span>
             </h1>
             <router-outlet *ngIf="companyService.company" />
 

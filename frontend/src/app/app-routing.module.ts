@@ -11,6 +11,8 @@ import { CompaniesListComponent } from './company/companies-list/companies-list.
 import { CompanyPageComponent } from './company/company-page/company-page.component';
 import { EmployeesComponent } from './company/employees/employees.component';
 import { CompanyPageHomeComponent } from './company/company-page-home/company-page-home.component';
+import { EmployeePageComponent } from './company/employee/employee-page/employee-page.component';
+import { EmployeePageHomeComponent } from './company/employee/employee-page-home/employee-page-home.component';
 
 
 const routes: Routes = [
@@ -23,12 +25,20 @@ const routes: Routes = [
     { path: 'companies-home', component: CompanyHomeComponent },
     { path: 'companies-list', component: CompaniesListComponent },
     { path: 'company-create', component: CreateCompanyComponent },
+
     {
         path: 'company/:companyName',
         component: CompanyPageComponent,
         children: [
             { path: 'home', component: CompanyPageHomeComponent },
             { path: 'employees', component: EmployeesComponent },
+            {
+                path: 'employee/:employeeName',
+                component: EmployeePageComponent,
+                children: [
+                    { path: 'home', component: EmployeePageHomeComponent }
+                ]
+            }
         ]
     }
 ]
