@@ -15,7 +15,7 @@ import { CardComponent } from 'src/app/components/card/card.component';
             class="grid grid-cols-3 grid-gap-1"
         >
             <app-card *ngFor="let employee of companyService.company.employees">
-                <h1 class="text-2xl font-semibold">
+                <h1 class="text-2xl font-semibold mb-3">
                     {{employee.name}}
                 </h1>
                 <h2>

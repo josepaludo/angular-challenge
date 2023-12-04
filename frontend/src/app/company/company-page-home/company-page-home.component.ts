@@ -10,6 +10,21 @@ import { ActivatedRoute } from '@angular/router';
     standalone: true,
     imports: [CommonModule, LinkButtonComponent],
     template: `
+        <p
+            class="m-10 mt-0 text-lg"
+            *ngIf="companyService.company"
+        >
+            {{companyService.company.description}}
+        </p>
+        <h2
+            class="mb-10 text-end"
+            *ngIf="companyService.company"
+        >
+            Employees :
+            <span class="font-semibold">
+                {{companyService.company.employees.length}}
+            </span>
+        </h2>
         <app-link-button
             *ngIf="companyService.company"
             [path]="'/company/'+companyService.company.name+'/employees'"

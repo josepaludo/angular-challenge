@@ -76,10 +76,10 @@ export class CompaniesListComponent implements OnInit {
     constructor(public companyService: CompanyService) {}
 
     ngOnInit() {
-        const isLoading = this.companyService.loading
+        const isNotLoading = !this.companyService.loading
         const didNotFetchData = !this.companyService.companies
-        if (!isLoading && didNotFetchData) {
-            this.companyService.getCompaniesData()
+        if (isNotLoading && didNotFetchData) {
+            this.companyService.getCompaniesData({force: false})
         }
     }
 }

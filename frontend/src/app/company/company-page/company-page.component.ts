@@ -40,7 +40,7 @@ export class CompanyPageComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.companyService.getCompaniesData()
+        this.companyService.getCompaniesData({force: false})
         this.route.params.subscribe(params => {
             const name = params["companyName"]
             this.companyService.setCompany(name)

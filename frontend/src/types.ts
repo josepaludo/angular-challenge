@@ -43,3 +43,9 @@ export type EmployeeType = {
     name: string,
     position: PositionType,
 }
+
+export type WarningPropsType = {
+    show: boolean,
+    message: string,
+    color: "green"|"red"|"amber"
+}

@@ -28,7 +28,9 @@ export class CompanyService {
             })
     }
 
-    getCompaniesData() {
+    getCompaniesData({force = false}) {
+        const didFetch = this.companies
+        if (this.loading || (didFetch && !force)) return
         this.loading = true
         axiosClientCompany.get('data')
             .then((res) => {

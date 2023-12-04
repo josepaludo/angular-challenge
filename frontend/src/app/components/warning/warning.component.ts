@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
                 'bg-amber-500 border-amber-600 text-amber-100': color === 'amber', 
                 'bg-green-500 border-green-600 text-green-100': color === 'green', 
             }"
+            [class]="class"
         >
             {{message}}
         </div>
@@ -22,4 +23,5 @@ export class WarningComponent {
 
     @Input() color: "red"|"green"|"amber" = "amber"
     @Input() message: string = ""
+    @Input() class: string = ""
 }

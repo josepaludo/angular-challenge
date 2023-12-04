@@ -5,12 +5,14 @@ import { inputClass } from 'src/constants';
 import { ButtonComponent } from 'src/app/components/button/button.component';
 import { CompanyService } from '../company.service';
 import { Router } from '@angular/router';
+import { WarningComponent } from 'src/app/components/warning/warning.component';
+import { WarningPropsType } from 'src/types';
 
 
 @Component({
     selector: 'app-create-company',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
+    imports: [CommonModule, ReactiveFormsModule, ButtonComponent, WarningComponent],
     template: `
         <h1 class="text-4xl mb-10">
             Create Company
@@ -44,12 +46,23 @@ import { Router } from '@angular/router';
                 [disabled]="disabled"
             />
         </form>
+        <app-warning
+            *ngIf="warning.show"
+            class="mt-5"
+            [message]="warning.message"
+            [color]="warning.color"
+        />
     `
 })
 export class CreateCompanyComponent {
 
     classes = inputClass
     disabled = false
+    warning: WarningPropsType = {
+        show: false,
+        message: "",
+        color: "green"
+    }
 
     form = new FormGroup({
         name: new FormControl(''),
@@ -66,20 +79,50 @@ export class CreateCompanyComponent {
         if (this.disabled) return
         this.disabled = true
 
+        const companyData = this.companyDataOrFieldsAreInvalid()
+        if (!companyData) return
+
+        const {status} = await this.companyService.createCompany(companyData)
+        this.handleResponse({status, name: companyData.name})
+    }
+
+    companyDataOrFieldsAreInvalid() {
         const {name, description, displayName} = this.form.value
         const fieldsAreValid = [name, description, displayName].every(field => {
             if (!field || field.trim() === "") return false
             return true
         })
-        if (!fieldsAreValid) return
-    
+        if (!fieldsAreValid) {
+            this.warning = {
+                show: false,
+                message: "Invalid inputs.",
+                color: "amber"
+            }
+            return null
+        }
         const companyData =  {
             name: name!.trim(),
             description: description!.trim(),
             displayName: displayName!.trim()
         }
-        const {data, status} = await this.companyService.createCompany(companyData)
-    
-        setTimeout(() => this.disabled = false, 2000)
+        return companyData
+    }
+
+    handleResponse({status, name}: {status: number, name: string}) {
+        if (status !== 200 && status !== 201) {
+            this.warning = {
+                show: true,
+                message: "Error trying to create Company.",
+                color: "red"
+            }
+            return
+        }
+        this.companyService.getCompaniesData({force: true})
+        this.warning = {
+            show: true,
+            message: `Success. You'll be redirected to the ${name} Company page.`,
+            color: "green"
+        }
+        setTimeout(() => this.router.navigate([`/company/${name}/home`]), 2000)
     }
 }
