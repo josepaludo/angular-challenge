@@ -44,18 +44,14 @@ export async function getCompanies({res, UserId}: {res: Response, UserId: number
     const companies = employees.map(employee => {
         const company = employee.Company
         return {
-            "employee": {
+            employee: {
                 name: employee.name,
                 position: employee.position,
-                company: {
-                    name: company.name,
-                    description: company.description
-                }
             },
-            "name": company.name,
-            "description": company.description,
+            name: company.name,
+            description: company.description,
             /* @ts-expect-error */ 
-            "employees": company.Employees.map(employee => ({
+            employees: company.Employees.map(employee => ({
                 name: employee.name,
                 position: employee.position
             }))

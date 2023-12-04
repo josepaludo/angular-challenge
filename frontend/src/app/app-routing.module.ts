@@ -8,6 +8,10 @@ import { SyncdbComponent } from './syncdb/syncdb.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CreateCompanyComponent } from './company/create-company/create-company.component';
 import { CompanyRouterOutletComponent } from './company/company-router-outlet/company-router-outlet.component';
+import { CompaniesListComponent } from './company/companies-list/companies-list.component';
+import { CompanyPageComponent } from './company/company-page/company-page.component';
+import { EmployeesComponent } from './company/employees/employees.component';
+import { CompanyPageHomeComponent } from './company/company-page-home/company-page-home.component';
 
 
 const routes: Routes = [
@@ -20,8 +24,17 @@ const routes: Routes = [
         path: 'company',
         component: CompanyRouterOutletComponent,
         children: [
-            { path: "home", component: CompanyHomeComponent },
-            { path: "create-company", component: CreateCompanyComponent },
+            { path: 'home', component: CompanyHomeComponent },
+            { path: 'create', component: CreateCompanyComponent },
+            { path: 'list', component: CompaniesListComponent },
+            {
+                path: ':companyName',
+                component: CompanyPageComponent,
+                children: [
+                    { path: 'employees', component: EmployeesComponent },
+                    { path: 'home', component: CompanyPageHomeComponent },
+                ]
+            },
         ]
     }
 ];

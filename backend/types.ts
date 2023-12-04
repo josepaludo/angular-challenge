@@ -19,14 +19,16 @@ export type TokenType = {
 
 export type PositionType = "founder"|"admin"|"staff"
 
+export const Position = {
+    founder: "founder",
+    admin: "admin",
+    staff: "staff",
+}
+
 export type CompaniesType = {
     employee: {
         name: string,
         position: PositionType,
-        company: {
-            name: string,
-            description: string
-        }
     },
     name: string,
     description: string,

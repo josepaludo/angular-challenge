@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { axiosClientCompany } from 'src/constants';
-import { CreateCompanyType } from 'src/types';
+import { CompaniesType, CompanyTypeWithEmployee, CreateCompanyType } from 'src/types';
 
 
 @Injectable({
@@ -8,9 +8,11 @@ import { CreateCompanyType } from 'src/types';
 })
 export class CompanyService {
 
-    constructor() {
-        this.getCompaniesData()
-    }
+    companies: CompaniesType = []
+    company: CompanyTypeWithEmployee|undefined
+    companiesChanged = new EventEmitter<CompaniesType>();
+
+    constructor() {}
 
     async createCompany(data: CreateCompanyType) {
         return await axiosClientCompany.post('create', data)
@@ -34,13 +36,21 @@ export class CompanyService {
                 const {status, data} = res
                 console.log("Create Company Status: ", status)
                 console.log("Create Company Data: ", data)
-                return {status, data}
+                if (status === 200) {
+                    this.companies = data.companies
+                    this.companiesChanged.emit(this.companies);
+                }
             })
             .catch((err) => {
                 const {status, data} = err.response
                 console.log("Create Company Status: ", status)
                 console.log("Create Company Data: ", data)
-                return {status, data}
             })
+    }
+
+    setCompany(name: string) {
+        this.company = this.companies.find(
+            company => company.name === name
+        )
     }
 }

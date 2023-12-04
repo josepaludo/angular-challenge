@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import dotenv from 'dotenv'
+import { Position } from '../types';
 
 
 dotenv.config()
@@ -29,7 +30,7 @@ const Employee = sequelize.define('Employee', {
         allowNull: false
     },
     position: {
-        type: DataTypes.ENUM('founder', 'admin', 'staff'),
+        type: DataTypes.ENUM(Position.founder, Position.admin, Position.staff),
         allowNull: false
     }
 })

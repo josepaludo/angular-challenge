@@ -22,10 +22,17 @@ export type CreateCompanyType = {
 
 export type PositionType = "founder"|"admin"|"staff"
 
-export type EmployeesAndCompanies = CompanyType & {
-    employee: EmployeeType & { company: CompanyType },
+export type CompanyTypeWithEmployee = {
+    name: string,
+    description: string
+    employee: {
+        name: string,
+        position: PositionType,
+    },
     employees: EmployeeType[]
-}[]
+}
+
+export type CompaniesType = CompanyTypeWithEmployee[]
 
 export type CompanyType = {
     name: string,

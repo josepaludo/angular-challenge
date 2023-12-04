@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getCompanies, getUser } from "../db/queries";
-import { CompanyType, TokenType } from "../types";
+import { Position, TokenType } from "../types";
 import { Company, Employee } from "../db/models";
 
 const companyRouter = Router()
@@ -43,6 +43,7 @@ companyRouter.post('/create', async (req, res) => {
 
     const employeeProfile = await Employee.create({
         name: displayName,
+        position: Position.founder,
         UserId: user.id,
         /* @ts-expect-error */ 
         CompanyId: company.id,
