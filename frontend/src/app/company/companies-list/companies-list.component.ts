@@ -1,17 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CompanyService } from '../company.service';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { RouterModule } from '@angular/router';
+import { LinkButtonComponent } from 'src/app/components/link-button/link-button.component';
 
 
 @Component({
     selector: 'app-companies-list',
     standalone: true,
-    imports: [CommonModule, CardComponent, RouterModule],
+    imports: [CommonModule, CardComponent, RouterModule, LinkButtonComponent],
     template: `
         <h1 class="text-4xl mb-10">Companies</h1>
 
+        <h2
+            class="text-2xl"
+            *ngIf="companyService.loading || !companyService.companies; else didLoad"
+        >
+            Loading...
+        </h2>
+
+        <ng-template #didLoad>
+            <div *ngIf="companyService.companies!.length === 0">
+                <h2 class="text-2xl mb-5">
+                    You don't have an employee profile on any company. 
+                </h2>
+                <p class="mb-5 text-lg">
+                    You can create a company or ask your company administrator for an invite link.
+                </p>
+                <app-link-button
+                    path="/company-create"
+                    title="Create a Company"
+                />
+            </div>
+        </ng-template>
+    
         <ul class="grid grid-cols-3 gap-1">
             <app-card
                 *ngFor="let company of this.companyService.companies"
@@ -48,7 +71,15 @@ import { RouterModule } from '@angular/router';
         </ul>
     `
 })
-export class CompaniesListComponent {
+export class CompaniesListComponent implements OnInit {
 
     constructor(public companyService: CompanyService) {}
+
+    ngOnInit() {
+        const isLoading = this.companyService.loading
+        const didNotFetchData = !this.companyService.companies
+        if (!isLoading && didNotFetchData) {
+            this.companyService.getCompaniesData()
+        }
+    }
 }

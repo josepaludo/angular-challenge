@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CompanyService } from '../company.service';
 
 
@@ -14,9 +14,16 @@ import { CompanyService } from '../company.service';
 })
 export class CompanyRouterOutletComponent implements OnInit {
 
+    constructor(
+        private companyService: CompanyService,
+        private route: ActivatedRoute
+    ) {}
+
     ngOnInit() {
         this.companyService.getCompaniesData()
+        this.route.params.subscribe(params => {
+            console.log("Company Name: ", params["companyName"])
+        })
     }
 
-    constructor(private companyService: CompanyService) {}
 }

@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
     template: `
+        <h1 class="text-4xl mb-10">
+            Create Company
+        </h1>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <input
                 [ngClass]="classes"

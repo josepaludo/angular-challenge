@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { axiosClientCompany } from 'src/constants';
 import { CompaniesType, CompanyTypeWithEmployee, CreateCompanyType } from 'src/types';
 
@@ -8,11 +8,9 @@ import { CompaniesType, CompanyTypeWithEmployee, CreateCompanyType } from 'src/t
 })
 export class CompanyService {
 
-    companies: CompaniesType = []
+    companies: CompaniesType|undefined
     company: CompanyTypeWithEmployee|undefined
-    companiesChanged = new EventEmitter<CompaniesType>();
-
-    constructor() {}
+    loading = false
 
     async createCompany(data: CreateCompanyType) {
         return await axiosClientCompany.post('create', data)
@@ -31,6 +29,7 @@ export class CompanyService {
     }
 
     getCompaniesData() {
+        this.loading = true
         axiosClientCompany.get('data')
             .then((res) => {
                 const {status, data} = res
@@ -38,7 +37,6 @@ export class CompanyService {
                 console.log("Create Company Data: ", data)
                 if (status === 200) {
                     this.companies = data.companies
-                    this.companiesChanged.emit(this.companies);
                 }
             })
             .catch((err) => {
@@ -46,11 +44,17 @@ export class CompanyService {
                 console.log("Create Company Status: ", status)
                 console.log("Create Company Data: ", data)
             })
+            .finally(() => {
+                this.loading = false
+            })
     }
 
     setCompany(name: string) {
-        this.company = this.companies.find(
-            company => company.name === name
-        )
+        if (!this.loading && this.companies) {
+            this.company = this.companies.find(comp => comp.name === name)
+        } else {
+            console.log("Set Time Out.")
+            setTimeout(() => this.setCompany(name), 200)
+        }
     }
 }

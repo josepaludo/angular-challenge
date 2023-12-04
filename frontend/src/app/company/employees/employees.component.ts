@@ -21,7 +21,7 @@ import { CardComponent } from 'src/app/components/card/card.component';
                 <h2>
                     Company:
                     <span class="font-semibold">
-                        <a [routerLink]="'/company/'+companyService.company.name">
+                        <a [routerLink]="'/company/'+companyService.company.name+'/home'">
                             {{companyService.company.name}}
                         </a>
                     </span>

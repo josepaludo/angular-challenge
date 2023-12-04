@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LinkButtonComponent } from 'src/app/components/link-button/link-button.component';
 import { CompanyService } from '../company.service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
     selector: 'app-company-page-home',

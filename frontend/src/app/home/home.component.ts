@@ -24,7 +24,7 @@ import { LinkButtonComponent } from '../components/link-button/link-button.compo
             <ng-template #authenticatedBlock>
                 <app-link-button
                     title="Companies"
-                    path="/company/home"
+                    path="/companies-home"
                 />
                 <app-link-button
                     title="Profile"

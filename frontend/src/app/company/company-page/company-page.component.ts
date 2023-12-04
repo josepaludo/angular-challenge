@@ -10,34 +10,40 @@ import { CompanyService } from '../company.service';
     template: `
         <h1
             class="text-4xl mb-10"
-            *ngIf="companyService.company"
+            *ngIf="companyService.loading; else isLoading"
         >
-            {{companyService.company.name}}
+            Loading...
         </h1>
-        <h1 *ngIf="!companyService.company">
-            Company not found
-        </h1>
-        <router-outlet></router-outlet>
+        <ng-template #isLoading>
+            <h1
+                class="text-4xl mb-10"
+                *ngIf="companyService.company"
+            >
+                {{companyService.company.name}}
+            </h1>
+            <router-outlet *ngIf="companyService.company" />
+
+            <h1
+                *ngIf="!companyService.company"
+                class="text-4xl mb-10"
+            >
+                Company not found
+            </h1>
+        </ng-template>
     `
 })
 export class CompanyPageComponent implements OnInit {
 
-    companyName = ""
-
     constructor(
-        private route: ActivatedRoute,
-        public companyService: CompanyService
+        public companyService: CompanyService,
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit() {
+        this.companyService.getCompaniesData()
         this.route.params.subscribe(params => {
-            this.companyName = params["companyName"]
-        })
-        this.companyService.companiesChanged.subscribe(companies => {
-            this.companyService.company = companies.find(
-                comp => comp.name === this.companyName
-            )
+            const name = params["companyName"]
+            this.companyService.setCompany(name)
         })
     }
-
 }

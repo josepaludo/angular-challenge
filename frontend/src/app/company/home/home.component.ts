@@ -9,11 +9,11 @@ import { LinkButtonComponent } from 'src/app/components/link-button/link-button.
     template: `
         <div class="flex">
             <app-link-button
-                path="/company/create"
+                path="/company-create"
                 title="Create Company"
             />
             <app-link-button
-                path="/company/list"
+                path="/companies-list"
                 title="List of Companies"
                 class="ms-3"
             />

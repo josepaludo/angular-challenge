@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 @Component({
   selector: 'app-root',
   template: `
-    <nav class=" bg-stone-800 py-3 text-stone-100">
+    <nav class=" bg-stone-800 py-3 text-stone-100 fixed w-full">
         <div class="flex justify-between items-center max-w-screen-lg px-10 mx-auto">
             <a class="font-semibold text-lg" routerLink="/">Home</a>
             <div class=" flex" *ngIf="!auth.authenticated; else authenticated">
@@ -16,7 +16,7 @@ import { AuthService } from './auth.service';
             </ng-template>
         </div>
     </nav>
-    <main class=" max-w-screen-lg mx-auto p-10">
+    <main class=" max-w-screen-lg mx-auto p-10 pt-20">
         <router-outlet />
     </main>
   `
