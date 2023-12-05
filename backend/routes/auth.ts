@@ -148,4 +148,20 @@ authRouter.post('/sync-db', async (req, res) => {
     }
 })
 
+authRouter.get('/test-db', async (req, res) => {
+    const data = {message: ""}
+    try {
+        await sequelize.authenticate()
+    } catch {
+        data.message = "DB not synced."
+        res.status(500)
+        res.json(data)
+        return
+    }
+    data.message = "DB synced."
+    res.status(200)
+    res.json(data)
+    return
+})
+
 export { authRouter }

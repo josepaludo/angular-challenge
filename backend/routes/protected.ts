@@ -1,9 +1,8 @@
 import { Router } from "express";
 import { authMiddleware } from "../middleware";
-import { CompaniesType, TokenType, UserDataType } from "../types";
+import { TokenType } from "../types";
 import { User } from "../db/models";
 import { companyRouter } from "./company-routes";
-import { getCompanies } from "../db/queries";
 
 
 const protectedRouter = Router()
