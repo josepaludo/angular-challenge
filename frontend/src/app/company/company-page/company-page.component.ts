@@ -46,8 +46,11 @@ export class CompanyPageComponent implements OnInit {
     ngOnInit() {
         this.companyService.getCompaniesData({force: false})
         this.route.params.subscribe(params => {
-            const name = params["companyName"]
-            this.companyService.setCompany(name)
+            const name = params["companyName"] as string|undefined
+            if (!name) {
+                console.log("Error on company page component: companyName is: ", name)
+            }
+            this.companyService.setCompany({name, count: 0})
         })
     }
 }

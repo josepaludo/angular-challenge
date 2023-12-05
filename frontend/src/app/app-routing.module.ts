@@ -13,14 +13,19 @@ import { EmployeesComponent } from './company/employees/employees.component';
 import { CompanyPageHomeComponent } from './company/company-page-home/company-page-home.component';
 import { EmployeePageComponent } from './company/employee/employee-page/employee-page.component';
 import { EmployeePageHomeComponent } from './company/employee/employee-page-home/employee-page-home.component';
+import { CreateInviteLinkComponent } from './company/create-invite-link/create-invite-link.component';
+import { JoinViaLinkHomeComponent } from './join-via-link-home/join-via-link-home.component';
 
 
 const routes: Routes = [
+
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'sync-db', component: SyncdbComponent },
     { path: 'profile', component: ProfileComponent },
+
+    { path: 'join-company/:companyName/:inviteLink', component: JoinViaLinkHomeComponent },
 
     { path: 'companies-home', component: CompanyHomeComponent },
     { path: 'companies-list', component: CompaniesListComponent },
@@ -31,6 +36,7 @@ const routes: Routes = [
         component: CompanyPageComponent,
         children: [
             { path: 'home', component: CompanyPageHomeComponent },
+            { path: 'create-invite-link', component: CreateInviteLinkComponent },
             { path: 'employees', component: EmployeesComponent },
             {
                 path: 'employee/:employeeName',

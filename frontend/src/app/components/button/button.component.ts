@@ -8,18 +8,18 @@ import { CommonModule } from '@angular/common';
     imports: [CommonModule],
     template: `
         <button
-            class="px-4 py-2 rounded-sm text-lg font-semibold"
             (click)="handleClick()"
             [type]="type"
             [disabled]="disabled"
+            class="px-4 py-2 rounded-sm text-lg font-semibold"
+            [class]="class"
             [ngClass]="{
-                'text-blue-50 bg-blue-500 hover:bg-blue-400 focus:bg-blue-400': color === 'blue' && !disabled,
-                'text-red-50 bg-red-500 hover:bg-red-400 focus:bg-red-400': color === 'red' && !disabled,
+                'text-blue-50 bg-blue-500 hover:bg-blue-400': color === 'blue' && !disabled,
+                'text-red-50 bg-red-500 hover:bg-red-400': color === 'red' && !disabled,
                 'bg-gray-500 text-gray-50 cursor-not-allowed': disabled,
-                class: true,
             }"
         >
-            {{this.title}}
+            {{title}}
         </button>
     `
 })

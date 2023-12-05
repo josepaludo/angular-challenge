@@ -25,11 +25,20 @@ import { ActivatedRoute } from '@angular/router';
                 {{companyService.company.employees.length}}
             </span>
         </h2>
-        <app-link-button
+        <div
             *ngIf="companyService.company"
-            [path]="'/company/'+companyService.company.name+'/employees'"
-            title="Company Employees"
-        />
+            class="flex"
+        >
+            <app-link-button
+                [path]="'/company/'+companyService.company.name+'/employees'"
+                title="Company Employees"
+            />
+            <app-link-button
+                [path]="'/company/'+companyService.company.name+'/create-invite-link'"
+                title="Create Invite Link"
+                class="ms-3"
+            />
+        </div>
     `
 })
 export class CompanyPageHomeComponent {

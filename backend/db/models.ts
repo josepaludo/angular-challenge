@@ -8,6 +8,7 @@ const DB_URL = process.env.DB_URL
 
 const sequelize = new Sequelize(DB_URL ?? "postgres://user:password@localhost:5432/db");
 
+
 const User = sequelize.define('User', {
     username: {
         type: DataTypes.STRING,
@@ -24,6 +25,7 @@ const User = sequelize.define('User', {
     }
 });
 
+
 const Employee = sequelize.define('Employee', {
     name: {
         type: DataTypes.STRING,
@@ -34,8 +36,10 @@ const Employee = sequelize.define('Employee', {
         allowNull: false
     }
 })
+
 Employee.belongsTo(User)
 User.hasMany(Employee)
+
 
 const Company = sequelize.define('Company', {
     name: {
@@ -48,7 +52,22 @@ const Company = sequelize.define('Company', {
         allowNull: false
     }
 })
+
 Employee.belongsTo(Company)
 Company.hasMany(Employee)
 
-export {Company, User, Employee, sequelize}
+
+const InviteLink = sequelize.define('InviteLink', {
+    id: {
+        primaryKey: true,
+        allowNull: false,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
+    },
+})
+
+InviteLink.belongsTo(Company)
+Company.hasMany(InviteLink)
+
+
+export {Company, User, Employee, InviteLink, sequelize}

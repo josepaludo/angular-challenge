@@ -1,3 +1,4 @@
+import { Request, Response } from "express"
 
 export type UserType = {
     id: number
@@ -9,7 +10,16 @@ export type UserType = {
 export type CompanyType = {
     id: number
     name: string
-    description: string
+    description: string,
+    Employees: EmployeeType[],
+    inviteLinks: string[]
+}
+
+export type EmployeeType = {
+    User: UserType
+    id: number,
+    name: string,
+    position: PositionType
 }
 
 export type TokenType = {
@@ -35,7 +45,8 @@ export type CompaniesType = {
     employees: {
         name: string,
         position: PositionType
-    }[]
+    }[],
+    inviteLinks: string[]
 }[]
 
 export type UserDataType = {
@@ -44,6 +55,28 @@ export type UserDataType = {
     companies: CompaniesType|null
 }
 
+export type GetCompanyProps = {
+    user: UserType,
+    companyName: string,
+    res: Response
+}
+
 export const expirationTime = 86400000
 
 export const accessToken = 'accessToken'
+
+export function isAdminAuthorized(employee: EmployeeType) {
+    return (
+        employee.position === Position.admin ||
+        employee.position === Position.founder
+    )
+}
+
+export function isFounderAuthorized(employee: EmployeeType) {
+    return employee.position === Position.founder
+}
+
+export type GetInviteLinkProps = {
+    inviteLink: string,
+    res: Response
+}

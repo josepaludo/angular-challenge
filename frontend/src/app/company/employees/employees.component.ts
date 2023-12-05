@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CompanyService } from '../company.service';
 import { CardComponent } from 'src/app/components/card/card.component';
+import { GridComponent } from 'src/app/components/grid/grid.component';
 
 
 @Component({
     selector: 'app-employees',
     standalone: true,
-    imports: [CommonModule, CardComponent, RouterModule],
+    imports: [CommonModule, CardComponent, RouterModule, GridComponent],
     template: `
-        <ul
+        <h1 class="text-3xl mb-10">
+            Employees
+        </h1>
+        <app-grid
             *ngIf="companyService.company && companyService.company.employees"
-            class="grid grid-cols-3 grid-gap-1"
         >
             <app-card *ngFor="let employee of companyService.company.employees">
                 <h1 class="text-2xl font-semibold mb-3">
@@ -35,7 +38,7 @@ import { CardComponent } from 'src/app/components/card/card.component';
                     </span>
                 </h2>
             </app-card>
-        </ul>
+        </app-grid>
     `
 })
 export class EmployeesComponent {

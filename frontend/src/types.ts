@@ -34,7 +34,8 @@ export type EmployeeType = {
 
 export type CompanyTypeWithEmployee = CompanyType & {
     employee: EmployeeType,
-    employees: EmployeeType[]
+    employees: EmployeeType[],
+    inviteLinks: string[]
 }
 
 export type CompaniesType = CompanyTypeWithEmployee[]

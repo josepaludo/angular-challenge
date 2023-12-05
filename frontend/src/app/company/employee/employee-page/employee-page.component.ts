@@ -14,13 +14,13 @@ import { Position } from 'src/types';
             class="text-3xl mb-10"
             *ngIf="!employeeService.employee; else notLoading"
         >
-            Loading...
+            Loading Employee...
         </h1>
         <ng-template #notLoading>
             <h1 class="text-3xl mb-10">
-                {{employeeService.employee!.name}} -
+                {{employeeService.employee!.name}}
                 <span
-                    class="font-semibold"
+                    class="ms-3 text-2xl font-semibold"
                     [ngClass]="{'text-amber-500': employeeService.employee!.position === position.founder}"
                 >
                     {{employeeService.employee!.position}}

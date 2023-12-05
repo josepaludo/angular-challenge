@@ -75,8 +75,8 @@ export class AuthService {
             })
             .catch((err) => {
                 const {data, status} = err.response
-                console.log("Sync service error Data: ", data)
-                console.log("Sync service error Status: ", status)
+                console.log("Auth service error Data: ", data)
+                console.log("Auth service error Status: ", status)
             })
     }
 
@@ -84,13 +84,13 @@ export class AuthService {
         axiosClient.post('auth/sync-db')
             .then((res) => {
                 const {data, status} = res
-                console.log("Sync service success Data: ", data)
-                console.log("Sync service success Status: ", status)
+                console.log("Sync success Data: ", data)
+                console.log("Sync success Status: ", status)
             })
             .catch((err) => {
                 const {data, status} = err.response
-                console.log("Sync service error Data: ", data)
-                console.log("Sync service error Status: ", status)
+                console.log("Sync error Data: ", data)
+                console.log("Sync error Status: ", status)
             })
     }
 
