@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { LoginType, RegisterType } from 'src/types';
-import { CookieService } from 'ngx-cookie-service';
 import { axiosClient } from 'src/constants';
 
 
@@ -11,8 +10,9 @@ export class AuthService {
 
     authenticated: boolean = false
     username: string|null = null
+    synced = false
 
-    constructor(private cookieService: CookieService) {
+    constructor() {
         this.maintenance()
     }
 
@@ -75,22 +75,45 @@ export class AuthService {
             })
             .catch((err) => {
                 const {data, status} = err.response
-                console.log("Sync service error Data: ", data)
-                console.log("Sync service error Status: ", status)
+                console.log("Maintenance error Data: ", data)
+                console.log("Maintenance error Status: ", status)
             })
     }
 
-    syncDb() {
-        axiosClient.post('auth/sync-db')
+    async syncDb() {
+        const {data, status} = await this.testDb()
+        if (status === 200) {
+            this.synced = true
+            return {data, status} 
+        }
+        return await axiosClient.post('auth/sync-db')
             .then((res) => {
                 const {data, status} = res
                 console.log("Sync service success Data: ", data)
                 console.log("Sync service success Status: ", status)
+                return {data, status}
             })
             .catch((err) => {
                 const {data, status} = err.response
                 console.log("Sync service error Data: ", data)
                 console.log("Sync service error Status: ", status)
+                return {data, status}
+            })
+    }
+
+    async testDb() {
+        return await axiosClient.get('auth/test-db')
+            .then((res) => {
+                const {data, status} = res
+                console.log("Test db success Data: ", data)
+                console.log("Test db success Status: ", status)
+                return {data, status}
+            })
+            .catch((err) => {
+                const {data, status} = err.response
+                console.log("Test db error Data: ", data)
+                console.log("Test db error Status: ", status)
+                return {data, status}
             })
     }
 
