@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { axiosClientCompany } from 'src/constants';
-import { CompaniesType, CompanyTypeWithEmployee, CreateCompanyType, EmployeeType } from 'src/types';
+import { CompaniesType, CompanyTypeWithEmployee, CreateCompanyType, EmployeeType, Position } from 'src/types';
 
 
 @Injectable({
@@ -27,6 +27,31 @@ export class CompanyService {
                 console.log("Create Company Data: ", data)
                 return {status, data}
             })
+    }
+
+    async deleteCompany() {
+        if (!this.company) return
+        const data = {companyName: this.company.name}
+        return await axiosClientCompany.post('delete', data)
+            .then((res) => {
+                const {status, data} = res
+                console.log("Delete Company Status: ", status)
+                console.log("Delete Company Data: ", data)
+                return {status, data}
+            })
+            .catch((err) => {
+                const {status, data} = err.response
+                console.log("Delete Company Status: ", status)
+                console.log("Delete Company Data: ", data)
+                return {status, data}
+            })
+    }
+
+    deleteCompanyClientSide() {
+        this.companies = this.companies!.filter(company => {
+            company.name !== this.company!.name
+        })
+        this.company = undefined
     }
 
     getCompaniesData({force = false}) {
@@ -92,7 +117,7 @@ export class CompanyService {
     }
 
     async joinViaLink({inviteLink, name}: {inviteLink: string, name: string}) {
-        return await axiosClientCompany.post('/join-via-link', {inviteLink, name})
+        return await axiosClientCompany.post('join-via-link', {inviteLink, name})
             .then((res) => {
                 const {status, data} = res
                 console.log("Join via Invite Link Status: ", status)
@@ -106,5 +131,16 @@ export class CompanyService {
                 console.log("Join via Invite Link Data: ", data)
                 return ({status, data})
             })
+    }
+
+    isAdminAuthorized() {
+        return (
+            this.ownEmployee?.position === Position.admin ||
+            this.ownEmployee?.position === Position.founder
+        )
+    }
+
+    isFounderAuthorized() {
+        return this.ownEmployee?.position === Position.founder
     }
 }

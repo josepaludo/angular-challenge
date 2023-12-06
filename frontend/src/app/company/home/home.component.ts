@@ -7,6 +7,9 @@ import { LinkButtonComponent } from 'src/app/components/link-button/link-button.
     standalone: true,
     imports: [CommonModule, LinkButtonComponent],
     template: `
+        <h1 class="text-4xl mb-10">
+            CorpOrg
+        </h1>
         <div class="flex">
             <app-link-button
                 path="/company-create"

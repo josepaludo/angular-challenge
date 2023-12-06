@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from 'src/app/components/button/button.component';
+import { BASE_CLIENT_URL } from 'src/constants';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class InviteLinkButtonComponent {
         console.log("He")
         if (this.clicked) return
         this.clicked = true
-        const url = 'http://localhost:4200/join-company/'
+        const url = BASE_CLIENT_URL+'join-company/'
         navigator.clipboard.writeText(url+this.companyName+'/'+this.link)
         setTimeout(() => this.clicked = false, 1000)
     }

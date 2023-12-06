@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { LinkButtonComponent } from 'src/app/components/link-button/link-button.component';
 import { CompanyService } from '../company.service';
 import { ActivatedRoute } from '@angular/router';
+import { GridComponent } from 'src/app/components/grid/grid.component';
 
 
 @Component({
     selector: 'app-company-page-home',
     standalone: true,
-    imports: [CommonModule, LinkButtonComponent],
+    imports: [CommonModule, LinkButtonComponent, GridComponent],
     template: `
         <p
             class="m-10 mt-0 text-lg"
@@ -25,20 +26,53 @@ import { ActivatedRoute } from '@angular/router';
                 {{companyService.company.employees.length}}
             </span>
         </h2>
-        <div
+    
+        <app-grid
             *ngIf="companyService.company"
-            class="flex"
         >
             <app-link-button
-                [path]="'/company/'+companyService.company.name+'/employees'"
+                [path]="'../employees'"
                 title="Company Employees"
+                class="w-full h-full"
+            />
+        </app-grid>
+
+        <h2
+            *ngIf="companyService.company && companyService.isAdminAuthorized()"
+            class="text-xl my-5 font-semibold"
+        >
+            Admin Authorized
+        </h2>
+        <app-grid
+            *ngIf="companyService.company && companyService.isAdminAuthorized()"
+        >
+            <app-link-button
+                [path]="'../create-invite-link'"
+                title="Create Invite Link"
+                class="w-full h-full"
             />
             <app-link-button
-                [path]="'/company/'+companyService.company.name+'/create-invite-link'"
-                title="Create Invite Link"
-                class="ms-3"
+                [path]="'../manage-employees'"
+                title="Manage Employees"
+                class="w-full h-full"
             />
-        </div>
+        </app-grid>
+
+        <h2
+            *ngIf="companyService.company && companyService.isFounderAuthorized()"
+            class="text-xl my-5 font-semibold text-amber-500"
+        >
+            Founder Authorized
+        </h2>
+        <app-grid
+            *ngIf="companyService.company && companyService.isFounderAuthorized()"
+        >
+            <app-link-button
+                [path]="'../delete-company'"
+                title="Delete Company"
+                class="w-full h-full"
+            />
+        </app-grid>
     `
 })
 export class CompanyPageHomeComponent {

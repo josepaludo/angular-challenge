@@ -1,13 +1,22 @@
 import axios from "axios";
 
 
+export const BASE_URL = "http://localhost:3000/" 
+
+export const BASE_CLIENT_URL = "http://localhost:4200/"
+
 export const axiosClient = axios.create({
-    baseURL: "http://localhost:3000/",
+    baseURL: BASE_URL,
     withCredentials: true
 })
 
 export const axiosClientCompany = axios.create({
-    baseURL: "http://localhost:3000/api/company/",
+    baseURL: BASE_URL+"api/company/",
+    withCredentials: true
+})
+
+export const axiosClientEmployee = axios.create({
+    baseURL: BASE_URL+"api/employee/",
     withCredentials: true
 })
 

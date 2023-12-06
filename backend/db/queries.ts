@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { Company, Employee, User, InviteLink } from "./models"
-import { CompaniesType, CompanyType, EmployeeType, GetCompanyProps, GetInviteLinkProps, TokenType, UserType } from "../types"
+import { CompaniesType, CompanyLowerCaseType, CompanyType, EmployeeType, GetCompanyProps, GetInviteLinkProps, Position, TokenType, UserType } from "../types"
 
 
 export async function getUser({req, res}: {req: Request, res: Response}) {
@@ -98,12 +98,7 @@ export async function getCompany({user, companyName, res}: GetCompanyProps) {
         name: company.name,
         employee: ownEmployee,
         employees: company.Employees
-    } as {
-        id: number,
-        name: string,
-        employee: EmployeeType,
-        employees: EmployeeType[]
-    }
+    } as CompanyLowerCaseType
 }
 
 export async function getInviteLink({inviteLink, res}: GetInviteLinkProps) {

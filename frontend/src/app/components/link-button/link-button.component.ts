@@ -9,9 +9,9 @@ import { RouterModule } from '@angular/router';
     imports: [CommonModule, RouterModule],
     template: `
         <a
-            class="bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-blue-50 text-lg font-semibold px-4 py-2 rounded-sm block max-w-fit"
-            [ngClass]="class"
+            class="bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-blue-50 text-lg font-semibold px-4 py-2 rounded-sm block"
             [routerLink]="path"
+            [class]="class"
         >
             {{title}}
         </a>

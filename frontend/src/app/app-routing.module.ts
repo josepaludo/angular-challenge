@@ -15,6 +15,9 @@ import { EmployeePageComponent } from './company/employee/employee-page/employee
 import { EmployeePageHomeComponent } from './company/employee/employee-page-home/employee-page-home.component';
 import { CreateInviteLinkComponent } from './company/create-invite-link/create-invite-link.component';
 import { JoinViaLinkHomeComponent } from './join-via-link-home/join-via-link-home.component';
+import { ManageEmployeesComponent } from './company/manage-employees/manage-employees.component';
+import { ManageComponent } from './company/employee/manage/manage.component';
+import { DeleteCompanyComponent } from './company/delete-company/delete-company.component';
 
 
 const routes: Routes = [
@@ -36,13 +39,17 @@ const routes: Routes = [
         component: CompanyPageComponent,
         children: [
             { path: 'home', component: CompanyPageHomeComponent },
+            { path: 'delete-company', component: DeleteCompanyComponent },
             { path: 'create-invite-link', component: CreateInviteLinkComponent },
+            { path: 'manage-employees', component: ManageEmployeesComponent },
             { path: 'employees', component: EmployeesComponent },
+
             {
                 path: 'employee/:employeeName',
                 component: EmployeePageComponent,
                 children: [
-                    { path: 'home', component: EmployeePageHomeComponent }
+                    { path: 'home', component: EmployeePageHomeComponent },
+                    { path: 'manage', component: ManageComponent }
                 ]
             }
         ]

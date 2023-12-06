@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { employeeNameTaken, getCompanies, getCompany, getInviteLink, getUser } from "../db/queries";
-import { EmployeeType, Position, isAdminAuthorized } from "../types";
+import { Position, isAdminAuthorized, isFounderAuthorized } from "../types";
 import { Company, Employee, InviteLink } from "../db/models";
 
 
@@ -161,6 +161,29 @@ companyRouter.post('/join-via-link', async (req, res) => {
     data.message = "Created an employee profile on the company"
     res.status(200).json(data)
     return
+})
+
+companyRouter.post('/delete', async (req, res) => {
+    const user = await getUser({req, res})
+    if (!user) return
+
+    const {companyName} = req.body as {companyName: string}
+    const company = await getCompany({res, user, companyName})
+    if (!company) return
+
+    if (!isFounderAuthorized(company.employee)) {
+        res.status(400).json({message: "Not founder authorized"})
+        return
+    }
+    
+    try {
+        await Company.destroy({ where: { id: company.id }})
+    } catch {
+        res.status(500).json({message: "Server error trying to delete company"})
+        return
+    }
+
+    res.status(200).json({message: "Deleted company"})
 })
 
 export { companyRouter }

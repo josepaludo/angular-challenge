@@ -15,6 +15,13 @@ export type CompanyType = {
     inviteLinks: string[]
 }
 
+export type CompanyLowerCaseType = {
+        id: number,
+        name: string,
+        employee: EmployeeType,
+        employees: EmployeeType[]
+    }
+
 export type EmployeeType = {
     User: UserType
     id: number,

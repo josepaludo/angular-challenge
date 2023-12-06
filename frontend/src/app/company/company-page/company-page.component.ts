@@ -11,16 +11,21 @@ import { CompanyService } from '../company.service';
     template: `
         <h1
             class="text-4xl mb-10"
-            *ngIf="companyService.loading; else isLoading"
+            *ngIf="companyService.loading; else loaded"
         >
             Loading...
         </h1>
-        <ng-template #isLoading>
+        <ng-template #loaded>
             <h1
                 class="text-4xl mb-10"
                 *ngIf="companyService.company"
             >
-                {{companyService.company.name}}
+                <a
+                    [routerLink]="'/company/'+companyService.company.name+'/home'"
+                    class="hover:text-gray-700"
+                >
+                    {{companyService.company.name}}
+                </a>
                 <span class="ms-5 text-2xl italic font-light">
                     Company
                 </span>

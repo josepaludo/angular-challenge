@@ -4,12 +4,21 @@ import { CompanyService } from '../company.service';
 import { CardComponent } from 'src/app/components/card/card.component';
 import { RouterModule } from '@angular/router';
 import { LinkButtonComponent } from 'src/app/components/link-button/link-button.component';
+import { CompanyUrlPipePipe } from 'src/app/pipes/company-url-pipe.pipe';
+import { EmployeeUrlPipePipe } from 'src/app/pipes/employee-url-pipe.pipe';
 
 
 @Component({
     selector: 'app-companies-list',
     standalone: true,
-    imports: [CommonModule, CardComponent, RouterModule, LinkButtonComponent],
+    imports: [
+        CommonModule,
+        CardComponent,
+        RouterModule,
+        LinkButtonComponent,
+        CompanyUrlPipePipe,
+        EmployeeUrlPipePipe
+    ],
     template: `
         <h1 class="text-4xl mb-10">Companies</h1>
 
@@ -40,7 +49,7 @@ import { LinkButtonComponent } from 'src/app/components/link-button/link-button.
                 *ngFor="let company of this.companyService.companies"
             >
                 <h2 class="text-xl font-semibold mb-3">
-                    <a [routerLink]="'/company/'+company.name+'/home'">
+                    <a [routerLink]="company|companyUrlPipe">
                         {{company.name}}
                     </a>
                 </h2>
@@ -57,9 +66,12 @@ import { LinkButtonComponent } from 'src/app/components/link-button/link-button.
                 </p>
                 <p>
                     Your employee profile: 
-                    <span class="font-semibold">
+                    <a
+                        [routerLink]="company|employeeUrlPipe"
+                        class="font-semibold"
+                    >
                         {{company.employee.name}}
-                    </span>
+                    </a>
                 </p>
                 <p>
                     Your position: 

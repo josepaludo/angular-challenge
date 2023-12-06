@@ -38,6 +38,16 @@ export type CompanyTypeWithEmployee = CompanyType & {
     inviteLinks: string[]
 }
 
+export type ManageEmployeeProps = {
+    props: {
+        companyName: string,
+        employeeName: string,
+    },
+    route: ManageEmployeeActions
+}
+
+export type ManageEmployeeActions = "remove"|"promote"|"demote" 
+
 export type CompaniesType = CompanyTypeWithEmployee[]
 
 export type EmployeeServiceType = EmployeeType & { company: CompanyType }
@@ -49,7 +59,7 @@ export type WarningPropsType = {
 }
 
 export const Position = {
-    staff: "staff",
-    admin: "admin",
-    founder: "founder"
+    staff: "staff" as PositionType,
+    admin: "admin" as PositionType,
+    founder: "founder" as PositionType
 }

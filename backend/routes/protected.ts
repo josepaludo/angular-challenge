@@ -4,9 +4,11 @@ import { CompaniesType, TokenType, UserDataType } from "../types";
 import { User } from "../db/models";
 import { companyRouter } from "./company-routes";
 import { getCompanies } from "../db/queries";
+import { employeeRouter } from "./employee-routes";
 
 
 const protectedRouter = Router()
+
 protectedRouter.use(authMiddleware)
 
 protectedRouter.get('/', (req, res) => {
@@ -38,6 +40,8 @@ protectedRouter.get('/user-data', async (req, res) => {
 })
 
 protectedRouter.use('/company', companyRouter)
+
+protectedRouter.use('/employee', employeeRouter)
 
 
 export { protectedRouter }
