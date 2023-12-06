@@ -8,6 +8,9 @@ import { LinkButtonComponent } from '../components/link-button/link-button.compo
     standalone: true,
     imports: [CommonModule, LinkButtonComponent],
     template: `
+        <h1 class="text-4xl mb-10">
+            CorpOrg
+        </h1>
         <div class="flex" >
             <ng-container *ngIf="!auth.authenticated; else authenticatedBlock">
                 <app-link-button
