@@ -18,12 +18,9 @@ authRouter.use(cookieParser())
 
 authRouter.post('/login', async (req, res) => {
 
-    const data = {message: "", username: ""}
     const {email, password} = req.body
     if (!email || !password) {
-        data.message = "Wrong input fields."
-        res.status(400)
-        res.json(data)
+        res.status(400).json({message: "Wrong input fields"})
         return
     }
 
@@ -31,43 +28,31 @@ authRouter.post('/login', async (req, res) => {
     try {
         user = await User.findOne({where: {email}}) as UserType|null
     } catch {
-        data.message = "Error while trying to load user info."
-        res.status(500)
-        res.json(data)
+        res.status(500).json({message: "Error while trying to load user info"})
         return
     }
 
     if (!user) {
-        data.message = "User doesn't exists"
-        res.status(400)
-        res.json(data)
+        res.status(400).json({message: "User does not exist"})
         return
     }
 
     bcrypt.compare(password, user.password, (err, result) => {
         if (err) {
-            data.message = "Error while trying to decode password."
-            res.status(500)
-            res.json(data)
+            res.status(500).json({message: "Error while trying to decode password"})
             return
         }
         if (result) {
-            data.message = "Success."
-            data.username = user!.username
+            const data = {message: "Success", username: user!.username}
             const token = jwt.sign({ id: user!.id }, SECRET_KEY ?? "");
             res.cookie(accessToken, token, {
                 httpOnly: true,
                 maxAge: expirationTime,
                 sameSite: 'none',
             })
-            res.status(200)
-            res.json(data)
-            return
+            res.status(200).json(data)
         } else {
-            data.message = "Wrong password."
-            res.status(400)
-            res.json(data)
-            return
+            res.status(400).json({message: "Wrong password"})
         }
     })
 })

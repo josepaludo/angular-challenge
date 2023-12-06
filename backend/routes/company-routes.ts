@@ -82,11 +82,8 @@ companyRouter.post('/create-invite-link', async (req, res) => {
     const company = await getCompany({res, user, companyName})
     if (!company) return
 
-    const data = { message: "", inviteLink: "" }
     if (!isAdminAuthorized(company.employee)) {
-        data.message = "Not admin authorized"
-        res.status(400)
-        res.json(data)
+        res.status(400).json({message: "Not admin authorized"})
         return
     }
 
@@ -94,23 +91,16 @@ companyRouter.post('/create-invite-link', async (req, res) => {
     try {
         inviteLink = await InviteLink.create({CompanyId: company.id})
     } catch {
-        data.message = "Server Error trying to create Invite Link"
-        res.status(500)
-        res.json(data)
+        res.status(500).json({message: "Server error trying to create invite link"})
         return
     }
     if (!inviteLink) {
-        data.message = "Error trying to create Invite Link"
-        res.status(400)
-        res.json(data)
+        res.status(400).json({message: "Error trying to create invite link"})
         return
     }
 
     /* @ts-expect-error */ 
-    data.inviteLink = inviteLink.id
-    data.message = "Invite Link created"
-    res.status(201)
-    res.json(data)
+    res.status(201).json({message: "Invite link created", inviteLink: inviteLink.id})
     return
 })
 

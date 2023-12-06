@@ -47,6 +47,7 @@ export async function getCompanies({res, UserId}: {res: Response, UserId: number
     /* @ts-expect-error */ 
     const companies = employees.map(employee => {
         const company = employee.Company
+        if (!company) return
         return {
             employee: {
                 name: employee.name,
@@ -63,7 +64,8 @@ export async function getCompanies({res, UserId}: {res: Response, UserId: number
             inviteLinks: company.InviteLinks.map(invite => invite.id)
         }
     })
-    return companies as CompaniesType
+    /* @ts-expect-error */ 
+    return companies.filter(company => company) as CompaniesType
 }
 
 export async function getCompany({user, companyName, res}: GetCompanyProps) {

@@ -40,6 +40,7 @@ import { EmployeeUrlPipePipe } from 'src/app/pipes/employee-url-pipe.pipe';
                 <app-link-button
                     path="/company-create"
                     title="Create a Company"
+                    class="w-fit"
                 />
             </div>
         </ng-template>

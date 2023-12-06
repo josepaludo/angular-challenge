@@ -63,11 +63,19 @@ export class LoginComponent {
     async onSubmit() {
         if (this.loading) return
         const {email, password} = this.loginForm.value
-        if (email?.trim() === "" || password?.trim() === "") {
+        if (
+            (!email || !password) ||
+            (email.trim() === "" || password.trim() === "")
+        ) {
+            this.warning = {
+                show: true,
+                color: 'amber',
+                message: "Wrong inputs."
+            }
             return
         }
-        // this.loading = true
-        /* @ts-expect-error */ 
+
+        this.loading = true
         const {data, status} = await this.auth.login({email, password})
         console.log("Data: ", data)
         console.log("Status: ", status)
@@ -84,6 +92,7 @@ export class LoginComponent {
                 message: "Login failed.",
                 color: "red"
             }
+            this.loading = false
         }
     }
 }

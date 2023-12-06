@@ -37,6 +37,8 @@ import { GridComponent } from 'src/app/components/grid/grid.component';
             />
         </app-grid>
 
+
+
         <h2
             *ngIf="companyService.company && companyService.isAdminAuthorized()"
             class="text-xl my-5 font-semibold"

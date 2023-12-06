@@ -58,10 +58,9 @@ export class CreateInviteLinkComponent {
     constructor(public companyService: CompanyService) {}
 
     async handleClick() {
+        if (this.loading) return
+        this.loading = true
         const {status, data} = await this.companyService.createInviteLink()
-    }
-
-    handleInviteClick(link: string) {
-        console.log(link)
+        this.loading = false
     }
 }
